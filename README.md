@@ -530,6 +530,6 @@ docker compose -f docker/docker-compose.yml down -v
 
 ## 👨‍💻 Author
 
-**Rohit Maiya**
+**Rohit Maiya M**
 
 Built as an academic major project and portfolio project.
