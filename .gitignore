@@ -1,0 +1,132 @@
+# ==========================================
+# Java / Maven
+# ==========================================
+
+/cloudvault/target/
+/cloudvault/build/
+
+# Maven wrapper generated files
+/cloudvault/.mvn/wrapper/maven-wrapper.jar
+
+
+# ==========================================
+# IntelliJ IDEA
+# ==========================================
+
+/.idea/
+*.iml
+*.iws
+*.ipr
+
+
+# ==========================================
+# Eclipse
+# ==========================================
+
+.classpath
+.project
+.settings/
+
+
+# ==========================================
+# VS Code
+# ==========================================
+
+.vscode/
+
+
+# ==========================================
+# Spring Boot / Application Configuration
+# ==========================================
+
+# Ignore the actual local application configuration
+/cloudvault/src/main/resources/application.properties
+
+# Optional local configuration files
+/cloudvault/src/main/resources/application-local.properties
+/cloudvault/src/main/resources/application-local.yml
+/cloudvault/src/main/resources/application-local.yaml
+
+
+# ==========================================
+# Environment Variables
+# ==========================================
+
+.env
+.env.*
+!.env.example
+
+
+# ==========================================
+# Secrets / Credentials
+# ==========================================
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+credentials
+credentials.*
+secrets
+secrets.*
+
+# AWS credentials/configuration
+.aws/
+aws-credentials
+aws_credentials
+
+
+# ==========================================
+# Logs
+# ==========================================
+
+*.log
+logs/
+
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+
+.DS_Store
+Thumbs.db
+
+# Windows Zone.Identifier files
+*:Zone.Identifier
+
+
+# ==========================================
+# Temporary Files
+# ==========================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+
+# ==========================================
+# Archives
+# ==========================================
+
+*.zip
+*.tar
+*.tar.gz
+
+
+# ==========================================
+# AWS CLI Installation Files
+# ==========================================
+
+/cloudvault/aws/
+/cloudvault/awscliv2.zip
+
+
+# ==========================================
+# Docker
+# ==========================================
+docker/pgsql/*
+!docker/pgsql/.gitkeep
