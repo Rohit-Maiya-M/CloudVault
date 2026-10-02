@@ -5,15 +5,66 @@ services:
     restart: unless-stopped
 
     environment:
-      POSTGRES_DB: cloudvault
-      POSTGRES_USER: cloudvault
-      POSTGRES_PASSWORD: cloudvault_dev_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
-      - "5432:5432"
+      - "${POSTGRES_HOST_PORT}:${POSTGRES_CONTAINER_PORT}"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ../cloudvault
+      dockerfile: Dockerfile
+
+    container_name: cloudvault-backend
+    restart: unless-stopped
+
+    depends_on:
+      - postgres
+
+    environment:
+      SERVER_PORT: ${BACKEND_CONTAINER_PORT}
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:${POSTGRES_CONTAINER_PORT}/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      CORS_ALLOWED_METHODS: ${CORS_ALLOWED_METHODS}
+      CORS_ALLOWED_HEADERS: ${CORS_ALLOWED_HEADERS}
+      CORS_ALLOW_CREDENTIALS: ${CORS_ALLOW_CREDENTIALS}
+
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_S3_REGION: ${AWS_S3_REGION}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+
+    container_name: cloudvault-frontend
+    restart: unless-stopped
+
+    depends_on:
+      - backend
+
+    environment:
+      API_BASE_URL: ${API_BASE_URL}
+
+    ports:
+      - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
 
 volumes:
   postgres_data:

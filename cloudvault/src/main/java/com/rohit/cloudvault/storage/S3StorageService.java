@@ -24,10 +24,12 @@ public class S3StorageService {
 
     private final S3Client s3Client;
 
-    @Value("${aws.s3.bucket}")
+    @Value("${aws.s3.bucket:}")
     private String bucketName;
 
     public String upload(MultipartFile file) throws IOException {
+
+        ensureStorageConfigured();
 
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("File cannot be empty");
@@ -72,6 +74,8 @@ public class S3StorageService {
 
     public byte[] download(String s3Key) {
 
+        ensureStorageConfigured();
+
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
                 .key(s3Key)
@@ -83,7 +87,9 @@ public class S3StorageService {
         return response.asByteArray();
     }
 
-    public void delete(String s3Key) {
+    public void delete(String s3Key) {        
+
+        ensureStorageConfigured();
 
         DeleteObjectRequest deleteObjectRequest =
                 DeleteObjectRequest.builder()
@@ -95,6 +101,8 @@ public class S3StorageService {
     }
 
     public boolean exists(String s3Key) {
+
+        ensureStorageConfigured();
 
         try {
             HeadObjectRequest headObjectRequest =
@@ -136,5 +144,13 @@ public class S3StorageService {
         }
 
         return sanitized;
+    }
+
+    private void ensureStorageConfigured() {
+        if (bucketName == null || bucketName.isBlank()) {
+            throw new IllegalStateException(
+                    "S3 storage is not configured yet."
+            );
+        }
     }
 }

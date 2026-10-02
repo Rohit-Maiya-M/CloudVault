@@ -130,3 +130,33 @@ Thumbs.db
 # ==========================================
 docker/pgsql/*
 !docker/pgsql/.gitkeep
+
+
+
+# ==========================================
+# Frontend
+# ==========================================
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Vite
+.vite/
